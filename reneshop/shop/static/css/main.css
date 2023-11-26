@@ -1,0 +1,10 @@
+
+@font-face {
+    font-family: mainFont;
+    src: url(../Comico-Regular.otf);
+  }
+  
+
+* {
+    font-family: mainFont;
+}
