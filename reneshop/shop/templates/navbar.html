@@ -1,0 +1,92 @@
+{%load static%}
+<nav style="box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);" class="navbar navbar-light navbar-expand-md sticky-top d-none d-sm-none d-md-none d-lg-block d-xl-block">
+    <div class="container-fluid">
+        <div style="margin-left: 10% !important;" id="navcol-1" class="collapse navbar-collapse order-2">
+            <ul class="navbar-nav">
+                <form class="d-flex">
+                  <button class="btn btn-outline-dark search-button" type="submit">
+                    <i class="fas fa-search"></i> <!-- Bootstrap search icon -->
+                  </button>                      
+                  <input class="form-control me-2 custom-search" type="search" placeholder="Search" aria-label="Search" id="searchInput">
+                  </form>
+            </ul>
+        </div>
+        <ul class="navbar-nav text-nowrap d-flex flex-row order-1 order-md-2 mx-md-auto">
+          <li class="nav-item">
+              <!-- Replace "path_to_your_logo.png" with the actual file path or URL of your logo image -->
+              <a class="navbar-brand" href="/"><img src="{% static 'img/logo.png' %}" width="75px" height="40px" alt="Logo"></a>
+          </li>
+          <button class="navbar-toggler" data-target="#navcol-1" data-toggle="collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="navbar-toggler-icon"></span>
+          </button>
+      </ul>
+      
+        <div style="margin-right: 10% !important;" class="order-3 ms-auto order-md-3 collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+              <li class="nav-item"></li>
+              <li class="nav-item custom-card"><a class="nav-link active" href="/card"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M160 112c0-35.3 28.7-64 64-64s64 28.7 64 64v48H160V112zm-48 48H48c-26.5 0-48 21.5-48 48V416c0 53 43 96 96 96H352c53 0 96-43 96-96V208c0-26.5-21.5-48-48-48H336V112C336 50.1 285.9 0 224 0S112 50.1 112 112v48zm24 48a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm152 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/></svg> Cart (0)</a></li>
+              <li class="nav-item custom-checkout"><a class="nav-link active" href="https://buy.stripe.com/aEUdSBeQo3NigWQbII">Check Out</a></li>
+              <li class="nav-item">
+                <div class="dropdown custom-dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                      EUR (€)
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item text-center" href="#" data-value="EUR">EUR (€)</a></li>
+                    <li><a class="dropdown-item text-center" href="#" data-value="USD">USD ($)</a></li>
+                    <li><a class="dropdown-item text-center" href="#" data-value="GBP">GBP (£)</a></li>
+                    <li><a class="dropdown-item text-center" href="#" data-value="AUD">AUD ($)</a></li>
+                    <li><a class="dropdown-item text-center" href="#" data-value="CAD">CAD ($)</a></li>
+                    <li><a class="dropdown-item text-center" href="#" data-value="JPY">JPY (¥)</a></li>
+                    <!-- Add more list items for other currencies -->
+                </ul>
+              </div>            
+              </li>
+                
+          </ul>
+      </div>
+      
+    </div>
+</nav>
+<nav  style="box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);" class="navbar navbar-expand-lg sticky-top navbar-light d-lg-none d-xl-none d-md-block d-sm-block d-block">
+  <div class="container">
+    <!-- Left side icons -->
+    <div style="margin-left: 5%;" class="navbar-nav me-auto d-flex flex-row">
+      <a class="nav-link mr-3 m-2 text-dark" href="#"><i class="fas fa-search fa-2x"></i></a>
+      <a class="nav-link m-2 text-dark" href="#"><i class="fas fa-hryvnia fa-2x"></i></a>
+    </div>
+    
+    <!-- Logo in the middle -->
+    <a class="navbar-brand mx-auto" href="#"><img src="{% static 'img/logo.png' %}" width="75px" height="40px" alt="Logo"></a>
+    
+    <!-- Right side icons -->
+    <div style="margin-right: 5%;" class="navbar-nav ms-auto d-flex flex-row">
+      <a class="nav-link m-2 text-dark" href="/card"><i class="fas fa-shopping-bag fa-2x"></i></a>
+      <a class="nav-link ml-3 m-2 text-dark" href="#" id="listToggle">
+        <i class="fas fa-bars fa-2x"></i>
+      </a>
+    </div>
+  </div>
+</nav>
+<div id="categoryList" style="display: none;">
+  <ul class="sidebar_categories" style="list-style: none;">
+    <li class="mt-3 text-center "><a style="font-size: 20px;" class="site-nav" href="/collections/all">All</a></li>
+    {% for category in categories %}
+      <li class="mt-3 text-center">
+        <a style="font-size: 20px;" href="/collections/{{ category }}" class="site-nav">{{ category }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<script>
+  document.getElementById('listToggle').addEventListener('click', function() {
+    var categoryList = document.getElementById('categoryList');
+    if (categoryList.style.display === 'none') {
+      categoryList.style.display = 'block';
+    } else {
+      categoryList.style.display = 'none';
+    }
+  });
+</script>

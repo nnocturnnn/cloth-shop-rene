@@ -15,9 +15,24 @@ class Product(models.Model):
     category = models.ManyToManyField(Category)
     quantity = models.IntegerField()
     size = models.CharField(max_length=50)
+    # is_3d = models.BooleanField(default=False) 
 
     def __str__(self):
         return self.name
+    
+# class Product3DModel(models.Model):
+#     product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='model_3d')
+#     model_file = models.FileField(upload_to='models_3d/')  # Storing 3D model file
+
+#     def __str__(self):
+#         return f"3D Model for {self.product.name}"
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='product_images/')  # Use ImageField for storing images
+
+    def __str__(self):
+        return f"Image for {self.product.name}"
 
 class Customer(models.Model):
     name = models.CharField(max_length=255)

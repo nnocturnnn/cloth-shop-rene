@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-op8aa9*#1va#2d8a!eur+1ccu3%(0g!r5p9m$z(ej&@#xduwhj
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+STATIC_URL = '/static/'
 
 # Application definition
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "shop",
 ]
 
 MIDDLEWARE = [
