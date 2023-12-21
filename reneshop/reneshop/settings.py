@@ -31,7 +31,7 @@ SECRET_KEY = "django-insecure-op8aa9*#1va#2d8a!eur+1ccu3%(0g!r5p9m$z(ej&@#xduwhj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.renecloth.com', 'https://rene-shop.onrender.com/']
+ALLOWED_HOSTS = ['www.renecloth.com', 'https://rene-shop.onrender.com/', 'renecloth.com', 'rene-shop.onrender.com']
 STATIC_URL = '/static/'
 
 # Application definition
