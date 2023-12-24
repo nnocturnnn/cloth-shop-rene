@@ -41,7 +41,7 @@ def render_with_categories(request, template_name, context={}):
 
         return render(request, 'success.html', {'success_message': success_message})  # Replace 'success.html' with your success template
     context.update({'categories': categories})
-    context.update({'lencart' : len(request.session['cart'])})
+    context.update({'lencart' : len(request.session.get(['cart'], {}))})
 
     return render(request, template_name, context)
 
