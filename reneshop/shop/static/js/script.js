@@ -3379,7 +3379,7 @@ function init() {
 
     // Load Model
     let loader = new THREE.GLTFLoader(manager);
-    loader.load("../static/fin.glb", function (gltf) {
+    loader.load("/static/fin.glb", function (gltf) {
         house = gltf.scene;
         adjustModel(house);
     }, undefined, function (error) {
