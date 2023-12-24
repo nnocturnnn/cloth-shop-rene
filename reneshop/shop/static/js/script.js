@@ -1,7 +1,3 @@
-/*
-	Designed By: Ishu Subedi
-	Original Image: https://dribbble.com/shots/2363674-Levitating-Product-Card
-*/
 
 
 /**
@@ -3321,6 +3317,31 @@ let renderer;
 let scene;
 let house;
 
+const modelContainer = document.getElementById('modelContainer');
+const loadingImage = document.getElementById('loadingImage');
+const sceneContainer = document.getElementById('sceneContainer');
+
+const manager = new THREE.LoadingManager();
+
+    // When loading starts: Show the image and hide the scene
+    manager.onStart = function (url, itemsLoaded, itemsTotal) {
+        console.log('Started loading:', url);
+        if (loadingImage && sceneContainer) {
+            loadingImage.classList.remove('d-none'); // Bootstrap class to show the image
+            sceneContainer.classList.add('d-none');  // Bootstrap class to hide the scene
+        }
+    };
+
+    // When loading is complete: Hide the image (add .d-none) and show the scene (remove .d-none)
+    manager.onLoad = function () {
+        console.log('Loading complete!');
+        if (loadingImage && sceneContainer) {
+            loadingImage.classList.add('d-none');    // Bootstrap class to hide the image
+            sceneContainer.classList.remove('d-none'); // Bootstrap class to show the scene
+        }
+    };
+
+
 function init() {
     container = document.querySelector('.scene');
 
@@ -3357,8 +3378,8 @@ function init() {
     container.appendChild(renderer.domElement);
 
     // Load Model
-    let loader = new THREE.GLTFLoader();
-    loader.load("../static/hk.gtlf", function (gltf) {
+    let loader = new THREE.GLTFLoader(manager);
+    loader.load("../static/fin.glb", function (gltf) {
         house = gltf.scene;
         adjustModel(house);
     }, undefined, function (error) {

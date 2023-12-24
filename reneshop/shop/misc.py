@@ -5,7 +5,7 @@ TELEGRAM = "5722155491:AAGUz30lSBkO5vn0cW8K8NNk5Lm6nnbFS9E" #TODO remove
 
 def send_telegram_message(message_text):
     url = f'https://api.telegram.org/bot{TELEGRAM}/sendMessage'
-    params = {'chat_id': 212283073, 'text': message_text}
+    params = {'chat_id': 329494298, 'text': message_text}
     response = requests.post(url, data=params)
 
 def get_cart(request):

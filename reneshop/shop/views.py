@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product, Customer, ProductImage
 from .misc import send_telegram_message, add_to_cart, get_cart, remove_from_cart, clear_cart
 # import stripe
@@ -41,6 +41,7 @@ def render_with_categories(request, template_name, context={}):
 
         return render(request, 'success.html', {'success_message': success_message})  # Replace 'success.html' with your success template
     context.update({'categories': categories})
+    context.update({'lencart' : len(request.session['cart'])})
 
     return render(request, template_name, context)
 
@@ -53,8 +54,34 @@ def terms_view(request):
 def ship_view(request):
     return render_with_categories(request, 'ship.html')
 
-def card_view(request):
-    return render_with_categories(request, 'card.html')
+def cart_view(request):
+    cart = request.session.get('cart', {})
+    detailed_cart = {}
+
+    for product_id, item in cart.items():
+        try:
+            product = Product.objects.get(pk=product_id)
+            total_price = product.price * item['quantity'] 
+            
+            detailed_cart[product_id] = {
+                'product_name': product.name,
+                'price': product.price,
+                'quantity': item['quantity'],
+                'total_price': total_price 
+            }
+        except Product.DoesNotExist:
+            print(f"Product with id {product_id} does not exist.")
+
+    total_items = sum(item['quantity'] for item in detailed_cart.values())
+    total_price = sum(item['total_price'] for item in detailed_cart.values())
+
+    context = {
+        'cart': detailed_cart,
+        'total_items': total_items,
+        'total_price': total_price,
+    }
+
+    return render_with_categories(request, 'card.html', context)
 
 def checkout_view(request):
     return render_with_categories(request, 'checkout.html')
@@ -95,7 +122,6 @@ def product_detail(request, product_id):
 def add_to_cart(request):
     product_id = request.POST.get('product_id')
     quantity = int(request.POST.get('quantity', 1))
-    product = get_object_or_404(Product, pk=product_id)
 
     # Initialize the cart in the session if it doesn't exist
     if 'cart' not in request.session or not request.session['cart']:
@@ -106,4 +132,19 @@ def add_to_cart(request):
     if product_id in cart:
         cart[product_id]['quantity'] += quantity
     else:
-        cart[product_id] = {'quantity': quantity, 'price': str(product.price)}
+        cart[product_id] = {'quantity': quantity}
+
+    request.session.modified = True
+    return redirect("/")
+
+
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+
+    if product_id in cart:
+        del cart[product_id]  # Remove the item from the cart
+
+    request.session['cart'] = cart  # Update the session cart
+    request.session.modified = True  # Mark the session as "modified" to make sure it gets saved
+
+    return redirect('/card') 
