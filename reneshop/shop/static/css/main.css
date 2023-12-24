@@ -204,3 +204,5 @@ nav {
   flex: 0 0 24%; /* This ensures that the flex items respect the max-width */
   margin-right: 5px; /* Optional, for some spacing between thumbnails */
 }
+
+
