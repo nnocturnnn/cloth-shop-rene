@@ -209,3 +209,8 @@ nav {
 .currencyButton:active, .currencyButton:hover, .currencyButton:focus {
   border: none !important;
 }
+
+
+#mxsize {
+  min-height: 60vh;
+}

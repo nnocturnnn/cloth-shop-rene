@@ -4,33 +4,33 @@
 <div class="col-lg-10 mt-md-5 justify-content-center">
 {% if category %}
 <h2 class="text-center mt-md-5">{{ category.name }}</h2>
-<p>{{category.description}}</p>
+<!-- <p>{{category.description}}</p> -->
 {% else %}
 <h2 class="text-center mt-md-5">All</h2>
-<p>
+<!-- <p>
 Clothing encompasses a wide range of garments that cater to different needs, styles, and occasions, offering versatility and functionality. Originally designed for protection and warmth, clothing has evolved into a form of self-expression and identity, deeply ingrained in cultural and social norms. From everyday wear like t-shirts and jeans to specialized attire such as formal suits and evening gowns, clothing plays a pivotal role in defining personal style and adapting to various settings. It serves not only a practical purpose but also allows individuals to showcase their unique taste, follow fashion trends, and make statements through their choice of attire. The world of clothing is as diverse as it is dynamic, constantly reflecting and influencing the ever-changing landscape of society and fashion.</p>
-{% endif %}
+{% endif %} -->
 {% if category.name == "Hoodies" or category == None %}
 <div class="row">
     <div class="col">
         <a href="/product/1">
       <div class="card text-center">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-indicators">
+          <!-- <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 5"></button>
-          </div>
+          </div> -->
           <div class="carousel-inner text-center">
             <div class="carousel-item active">
               <video class="text-center" playsinline="playsinline" autoplay="autoplay" muted="muted" width="300px" height="400px" loop="loop">
                 <source src="https://storage.googleapis.com/rene-shop/7ab475ca-2a2d-4122-9319-e1a62571ba19.mp4" type="video/mp4">
               </video>
             </div>
-            <div class="carousel-item">
+            <!-- <div class="carousel-item">
                 <img src="https://storage.googleapis.com/rene-shop/IMG_3055.avif" class="d-block card-img-top carousel-img-small" alt="Image 2">
             </div>
             <div class="carousel-item">
@@ -44,28 +44,28 @@ Clothing encompasses a wide range of garments that cater to different needs, sty
           </div>          
           <div class="carousel-item">
             <img src="https://storage.googleapis.com/rene-shop/EE60CCAA-141C-4473-8D0A-CE688B89D24D%20(1).avif" class="d-block card-img-top carousel-img-small" alt="Image 5">
-        </div>    
+        </div>     -->
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
           <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
-          </button>
+          </button> -->
         </div>
         <div class="card-body">
           <h2 class="card-title">“SWEATY KITTIES”</h2>
           {% if currency_code == 'USD' %}
-              <p>USD $150.00</p>
-          {% elif currency_code == 'EUR' %}
-              <p>EUR €135.84</p>
-          {% elif currency_code == 'ILS' %}
-              <p>ILS ₪542.81</p>
-          {% elif currency_code == 'UAH' %}
-              <p>UAH ₴5,718.35</p>
-          {% endif %}
+                        <p>USD $150.00</p>
+                    {% elif currency_code == 'EUR' %}
+                        <p>EUR €140.00</p>
+                    {% elif currency_code == 'ILS' %}
+                        <p>ILS ₪540.00</p>
+                    {% elif currency_code == 'UAH' %}
+                        <p>UAH ₴5,720.00</p>
+                    {% endif %}
         </div>
       </div>
     </a>

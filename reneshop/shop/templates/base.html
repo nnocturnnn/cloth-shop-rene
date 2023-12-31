@@ -31,12 +31,14 @@
 <body>
   {% include 'navbar.html' %}
   <main>
+    <div id="mxsize">
     <div class="container">
       <div class="row">
         {% include 'sidebar.html' %}
         {% block content %}{% endblock %}
       </div>
     </div>
+  </div>
   </main>
     {% include 'footer.html'%}
 </body>
