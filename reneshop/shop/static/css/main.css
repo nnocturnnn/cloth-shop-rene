@@ -17,7 +17,7 @@ a, a:hover, a:focus, a:active {
 
 main, footer {
   margin-left: 7%;
-  margin-right: 10%;
+  margin-right: 7%;
 }
 
 .list-unstyled li a:hover {
@@ -206,3 +206,6 @@ nav {
 }
 
 
+.currencyButton:active, .currencyButton:hover, .currencyButton:focus {
+  border: none !important;
+}

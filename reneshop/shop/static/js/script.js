@@ -8,6 +8,7 @@
  * @author Don McCurdy / https://www.donmccurdy.com
  */
 
+
 THREE.GLTFLoader = ( function () {
 
 	function GLTFLoader( manager ) {
@@ -3376,6 +3377,14 @@ function init() {
     renderer.setSize(width, height);
 	renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
+	
+	controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true; // Optional, but this gives a nice inertial effect
+    controls.dampingFactor = 0.05;
+    controls.screenSpacePanning = false;
+    controls.minDistance = 100;
+    controls.maxDistance = 500;
+    controls.maxPolarAngle = Math.PI / 2;
 
     // Load Model
     let loader = new THREE.GLTFLoader(manager);
@@ -3399,9 +3408,7 @@ function adjustModel(model) {
 
 function animate() {
     requestAnimationFrame(animate);
-    if (house) {
-        house.rotation.y += 0.007;
-    }
+    controls.update(); // Only required if controls.enableDamping = true, or if controls.autoRotate = true
     renderer.render(scene, camera);
 }
 

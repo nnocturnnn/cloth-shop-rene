@@ -1,7 +1,7 @@
 {%load static%}
 <nav style="box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);" class="navbar navbar-light navbar-expand-md sticky-top d-none d-sm-none d-md-none d-lg-block d-xl-block">
     <div class="container-fluid">
-        <div style="margin-left: 10% !important;" id="navcol-1" class="collapse navbar-collapse order-2">
+        <div style="margin-left: 7% !important;" id="navcol-1" class="collapse navbar-collapse order-2">
             <ul class="navbar-nav">
                 <form class="d-flex">
                   <button class="btn btn-outline-dark search-button" type="submit">
@@ -14,7 +14,7 @@
         <ul class="navbar-nav text-nowrap d-flex flex-row order-1 order-md-2 mx-md-auto">
           <li class="nav-item">
               <!-- Replace "path_to_your_logo.png" with the actual file path or URL of your logo image -->
-              <a class="navbar-brand" href="/"><img src="{% static 'img/logo.png' %}" width="75px" height="40px" alt="Logo"></a>
+              <a class="navbar-brand" href="/"><img src="https://storage.googleapis.com/rene-shop/logo.png" width="75px" height="40px" alt="Logo"></a>
           </li>
           <button class="navbar-toggler" data-target="#navcol-1" data-toggle="collapse">
               <span class="sr-only">Toggle navigation</span>
@@ -22,7 +22,7 @@
           </button>
       </ul>
       
-        <div style="margin-right: 10% !important;" class="order-3 ms-auto order-md-3 collapse navbar-collapse">
+        <div style="margin-right: 7% !important;" class="order-3 ms-auto order-md-3 collapse navbar-collapse">
           <ul class="navbar-nav ms-auto">
               <li class="nav-item"></li>
               <li class="nav-item custom-card"><a class="nav-link active" href="/card"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M160 112c0-35.3 28.7-64 64-64s64 28.7 64 64v48H160V112zm-48 48H48c-26.5 0-48 21.5-48 48V416c0 53 43 96 96 96H352c53 0 96-43 96-96V208c0-26.5-21.5-48-48-48H336V112C336 50.1 285.9 0 224 0S112 50.1 112 112v48zm24 48a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm152 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/></svg> Cart ({{lencart}})</a></li>
@@ -33,10 +33,10 @@
                       EUR (€)
                   </button>
                   <ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item text-center" href="#" data-value="EUR">EUR (€)</a></li>
-                    <li><a class="dropdown-item text-center" href="#" data-value="USD">USD ($)</a></li>
-                    <li><a class="dropdown-item text-center" href="#" data-value="AUD">UAH (₴)</a></li>
-                    <li><a class="dropdown-item text-center" href="#" data-value="JPY">ILS (₪)</a></li>
+                    <li><a class="dropdown-item text-center" href="?cur=EUR" data-value="EUR">EUR (€)</a></li>
+                    <li><a class="dropdown-item text-center" href="?cur=USD" data-value="USD">USD ($)</a></li>
+                    <li><a class="dropdown-item text-center" href="?cur=UAH" data-value="AUD">UAH (₴)</a></li>
+                    <li><a class="dropdown-item text-center" href="?cur=ILS" data-value="JPY">ILS (₪)</a></li>
                     <!-- Add more list items for other currencies -->
                 </ul>
               </div>            
@@ -52,11 +52,13 @@
     <!-- Left side icons -->
     <div style="margin-left: 5%;" class="navbar-nav me-auto d-flex flex-row">
       <a class="nav-link mr-3 m-2 text-dark" href="#"><i class="fas fa-search fa-2x"></i></a>
-      <a class="nav-link m-2 text-dark" href="#"><i class="fas fa-hryvnia fa-2x"></i></a>
+      <button id="currencyButton" style="background-color: transparent; color: black; border: none; outline: none; " class="btn btn-secondary" type="button">
+        EUR (€)
+    </button>
     </div>
     
     <!-- Logo in the middle -->
-    <a class="navbar-brand mx-auto" href="#"><img src="{% static 'img/logo.png' %}" width="75px" height="40px" alt="Logo"></a>
+    <a class="navbar-brand mx-auto" href="/"><img src="https://storage.googleapis.com/rene-shop/logo.png" width="75px" height="40px" alt="Logo"></a>
     
     <!-- Right side icons -->
     <div style="margin-right: 5%;" class="navbar-nav ms-auto d-flex flex-row">
@@ -88,3 +90,62 @@
     }
   });
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Array of available currencies
+      var currencies = [
+          { code: "EUR", symbol: "€" },
+          { code: "USD", symbol: "$" },
+          { code: "UAH", symbol: "₴" },
+          { code: "ILS", symbol: "₪" }
+      ];
+  
+      // Initialize the current currency index based on the URL
+      var currentIndex = getCurrentIndexFromURL();
+  
+      // Function to get the current index from the URL parameter
+      function getCurrentIndexFromURL() {
+          var currentCur = new URL(window.location.href).searchParams.get("cur");
+          var index = currencies.findIndex(currency => currency.code === currentCur);
+          return index >= 0 ? index : 0; // Ensure the default is 0 if not found
+      }
+  
+      // Function to change the currency and update the URL
+      function changeCurrency() {
+          // Increment the index and wrap around if necessary
+          currentIndex = (currentIndex + 1) % currencies.length;
+  
+          // Update the button text with the new currency
+          var currencyButton = document.getElementById('currencyButton');
+          if (currencyButton) {
+              currencyButton.textContent = `${currencies[currentIndex].code} (${currencies[currentIndex].symbol})`;
+          } else {
+              console.error('Currency button not found!');
+          }
+  
+          // Update the URL with the new currency and refresh the page
+          var newUrl = updateQueryStringParameter(window.location.href, 'cur', currencies[currentIndex].code);
+          window.location.href = newUrl;
+      }
+  
+      // Function to update query string parameter
+      function updateQueryStringParameter(uri, key, value) {
+          var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+          var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+          if (uri.match(re)) {
+              return uri.replace(re, '$1' + key + "=" + value + '$2');
+          } else {
+              return uri + separator + key + "=" + value;
+          }
+      }
+  
+      // Attach the event listener to the currency button
+      var currencyButton = document.getElementById('currencyButton');
+      if (currencyButton) {
+          currencyButton.addEventListener('click', changeCurrency);
+      } else {
+          console.error('Currency button not found!');
+      }
+  });
+  </script>
+  

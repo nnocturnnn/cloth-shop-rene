@@ -3,7 +3,7 @@
 <div class="col-lg-10 justify-content-center">
     <div class="banner">
       <a href="/">
-        <img class="placeholder" src="../static/img/Baner.avif" style="width:100%; height:100%;" alt="Banner Image" />
+        <img class="placeholder" src="https://storage.googleapis.com/rene-shop/Baner.avif" style="width:100%; height:100%;" alt="Banner Image" />
       </a>
   </div>
   <h2 class="text-center mt-3">New Arrivals</h2>
@@ -11,45 +11,24 @@
     <div class="col">
         <a href="/product/1">
       <div class="card text-center">
-        <div id="carouselExampleIndicators" class="carousel slide">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
-          </div>
           <div class="carousel-inner text-center">
             <div class="carousel-item active">
               <video class="text-center" playsinline="playsinline" autoplay="autoplay" muted="muted" width="300px" height="400px" loop="loop">
                 <source src="https://storage.googleapis.com/rene-shop/7ab475ca-2a2d-4122-9319-e1a62571ba19.mp4" type="video/mp4">
               </video>
             </div>
-            <div class="carousel-item">
-                <img src="../static/img/IMG_3058.avif" class="d-block card-img-top carousel-img-small" alt="Image 2">
-            </div>
-            <div class="carousel-item">
-                <img src="../static/img/IMG_3059.avif" class="d-block card-img-top carousel-img-small" alt="Image 3">
-            </div>
-            <div class="carousel-item">
-                <img src="../static/img/IMG_3055.avif" class="d-block card-img-top carousel-img-small" alt="Image 4">
-            </div>            
-            <div class="carousel-item">
-              <img src="../static/img/IMG_3060.avif" class="d-block card-img-top carousel-img-small" alt="Image 4">
-          </div> 
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
         <div class="card-body">
           <h2 class="card-title">“SWEATY KITTIES”</h2>
-          <p id="productprice" class="card-text">140</p>
+          {% if currency_code == 'USD' %}
+          <p id="productprice" class="card-text">USD $150.00</p>
+          {% elif currency_code == 'EUR' %}
+          <p id="productprice" class="card-text">EUR €135.84</p>
+          {% elif currency_code == 'ILS' %}
+          <p id="productprice" class="card-text">ILS ₪542.81</p>
+          {% elif currency_code == 'UAH' %}
+          <p id="productprice" class="card-text">UAH ₴5,718.35</p>
+          {% endif %}
         </div>
       </div>
     </a>
@@ -76,7 +55,6 @@ function showSlides(index) {
 }
 });
 </script> <!-- Include your JavaScript file -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js'></script><script  src="../static/js/script.js"></script>
 {% for product in products %}
 {% endfor %}
 {% endblock %}

@@ -15,6 +15,7 @@ def get_categories():
 
 def render_with_categories(request, template_name, context={}):
     categories = get_categories()
+
     if request.method == 'POST':
         if 'email_form' in request.POST:
             email = request.POST.get('email')
@@ -41,6 +42,7 @@ def render_with_categories(request, template_name, context={}):
 
         return render(request, 'success.html', {'success_message': success_message})  # Replace 'success.html' with your success template
     context.update({'categories': categories})
+    context.update({'currency_code': request.GET.get('cur', 'EUR')})
     context.update({'lencart': len(request.session.get('cart', {}))})
 
     return render(request, template_name, context)
@@ -53,6 +55,10 @@ def terms_view(request):
 
 def ship_view(request):
     return render_with_categories(request, 'ship.html')
+
+
+def about_view(request):
+    return render_with_categories(request, 'about.html')
 
 def cart_view(request):
     cart = request.session.get('cart', {})

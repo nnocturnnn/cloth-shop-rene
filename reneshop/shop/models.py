@@ -1,4 +1,13 @@
 from django.db import models
+from .misc import get_conversion_rate
+from storages.backends.gcloud import GoogleCloudStorage
+
+
+class GoogleCloudMediaStorage(GoogleCloudStorage):
+    default_acl = 'publicRead'
+    file_overwrite = False
+    
+    bucket_name = 'rene-shop'
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -20,6 +29,12 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
+    def convert_price(self, to_currency):
+        if to_currency == 'USD':
+            return self.price  # No conversion needed
+        rate = get_conversion_rate('USD', to_currency)
+        return self.price * rate
+    
 # class Product3DModel(models.Model):
 #     product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='model_3d')
 #     model_file = models.FileField(upload_to='models_3d/')  # Storing 3D model file
@@ -29,10 +44,16 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='product_images/')  # Use ImageField for storing images
+    image = models.ImageField(upload_to='product_images/', storage=GoogleCloudMediaStorage())
 
     def __str__(self):
         return f"Image for {self.product.name}"
+
+    @property
+    def image_url(self):
+        if self.image:
+            return self.image.url
+        return None
 
 class Customer(models.Model):
     name = models.CharField(max_length=255)
