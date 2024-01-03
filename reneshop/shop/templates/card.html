@@ -25,9 +25,13 @@
                       <th scope="row">{{ forloop.counter }}</th>
                       <td>{{ details.product_name }}</td>
                       <td>${{ details.price }}</td>
-                      <td>
-                        <input type="number" class="form-control" value="{{ details.quantity }}" min="1">
-                      </td>
+                      <form action="{% url 'update_cart' %}" method="post" class="update-cart-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product_id }}">
+                        <td>
+                            <input type="number" name="new_quantity" class="form-control quantity-input" value="{{ details.quantity }}" min="1">
+                        </td>
+                    </form>
                       <td>${{ details.total_price|floatformat:2 }}</td>
                       <td>
                         <form action="{% url 'remove_from_cart' product_id %}" method="post">
@@ -50,11 +54,31 @@
                 <h5 class="card-title">Cart Summary</h5>
                 <p>Total Items: {{ total_items }}</p>
                 <p>Total Price: ${{ total_price }}</p>
+                {% if total_items == 1 %}
                 <a href="https://buy.stripe.com/aEUdSBeQo3NigWQbII" class="btn btn-primary">Checkout</a>
+                {% elif total_items == 2 %}
+                <a href="https://buy.stripe.com/14kaGp9w4gA4fSM9AB" class="btn btn-primary">Checkout</a>
+                {% elif total_items == 3 %}
+                <a href="https://buy.stripe.com/14k6q97nW83ycGAfZ0" class="btn btn-primary">Checkout</a>
+                {% elif total_items == 4 %}
+                <a href="https://buy.stripe.com/4gw3dX23C0B66ic3cf" class="btn btn-primary">Checkout</a>
+                {% else %}
+                <a href="https://buy.stripe.com/bIY29T6jS6Zu3607sw" class="btn btn-primary">Checkout</a>
+                {% endif %}
               </div>
             </div>
           </div>
         </div>
       </div>
 </div>
+<script>
+  // Listen for input changes on any element with the class 'quantity-input'
+  document.querySelectorAll('.quantity-input').forEach(function(input) {
+      input.addEventListener('change', function() {
+          // Submit the parent form of the input field when the value changes
+          this.form.submit();
+      });
+  });
+</script>
+
 {% endblock %}

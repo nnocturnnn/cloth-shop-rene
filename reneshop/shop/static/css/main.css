@@ -200,9 +200,10 @@ nav {
 }
 
 .thumbnail-container .small-image {
-  max-width: 24%;
+  max-width: 19%;
   flex: 0 0 24%; /* This ensures that the flex items respect the max-width */
   margin-right: 5px; /* Optional, for some spacing between thumbnails */
+  border: none;
 }
 
 

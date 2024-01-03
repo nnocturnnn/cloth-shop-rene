@@ -154,3 +154,20 @@ def remove_from_cart(request, product_id):
     request.session.modified = True  # Mark the session as "modified" to make sure it gets saved
 
     return redirect('/card') 
+
+
+@require_POST
+def update_cart(request):
+    product_id = request.POST.get('product_id')
+    new_quantity = int(request.POST.get('new_quantity', 1))
+
+    # Logic to update the cart in the session
+    if 'cart' in request.session and product_id in request.session['cart']:
+        if new_quantity > 0:
+            request.session['cart'][product_id]['quantity'] = new_quantity
+        else:
+            # Consider removing the item if the quantity is set to 0 or less
+            del request.session['cart'][product_id]
+            
+    request.session.modified = True
+    return redirect("/card")
