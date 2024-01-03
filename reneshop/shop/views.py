@@ -141,7 +141,7 @@ def add_to_cart(request):
         cart[product_id] = {'quantity': quantity}
 
     request.session.modified = True
-    return redirect("/")
+    return  redirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def remove_from_cart(request, product_id):
