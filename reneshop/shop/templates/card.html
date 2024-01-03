@@ -55,15 +55,15 @@
                 <p>Total Items: {{ total_items }}</p>
                 <p>Total Price: ${{ total_price }}</p>
                 {% if total_items == 1 %}
-                <a href="https://buy.stripe.com/aEUdSBeQo3NigWQbII" class="btn btn-primary">Checkout</a>
+                <a href="https://buy.stripe.com/aEUdSBeQo3NigWQbII" class="btn btn-dark">Checkout</a>
                 {% elif total_items == 2 %}
-                <a href="https://buy.stripe.com/14kaGp9w4gA4fSM9AB" class="btn btn-primary">Checkout</a>
+                <a href="https://buy.stripe.com/14kaGp9w4gA4fSM9AB" class="btn btn-dark">Checkout</a>
                 {% elif total_items == 3 %}
-                <a href="https://buy.stripe.com/14k6q97nW83ycGAfZ0" class="btn btn-primary">Checkout</a>
+                <a href="https://buy.stripe.com/14k6q97nW83ycGAfZ0" class="btn btn-dark">Checkout</a>
                 {% elif total_items == 4 %}
-                <a href="https://buy.stripe.com/4gw3dX23C0B66ic3cf" class="btn btn-primary">Checkout</a>
+                <a href="https://buy.stripe.com/4gw3dX23C0B66ic3cf" class="btn btn-dark">Checkout</a>
                 {% else %}
-                <a href="https://buy.stripe.com/bIY29T6jS6Zu3607sw" class="btn btn-primary">Checkout</a>
+                <a href="https://buy.stripe.com/bIY29T6jS6Zu3607sw" class="btn btn-dark">Checkout</a>
                 {% endif %}
               </div>
             </div>

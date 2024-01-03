@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product, Customer, ProductImage
-from .misc import send_telegram_message, add_to_cart, get_cart, remove_from_cart, clear_cart
+from .misc import send_telegram_message
 # import stripe
 from django.views.decorators.http import require_POST
 import os 

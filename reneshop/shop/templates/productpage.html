@@ -34,15 +34,15 @@
                     <!-- Large Image -->
                     
                     <div class="mb-3">
-                        <img style="border: none;" src="https://storage.googleapis.com/rene-shop/IMG_3060.avif" class="img-fluid" id="main-image" alt="Main Image" />
+                        <img style="border: none;" src="https://storage.googleapis.com/rene-shop/IMG_3060.webp" class="img-fluid" id="main-image" alt="Main Image" />
                     </div>
                     <!-- Small Thumbnails -->
                     <div class="d-flex justify-content-start thumbnail-container">
-                        <img src="https://storage.googleapis.com/rene-shop/IMG_3060.avif" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3060.avif" alt="Thumbnail 2" />
-                        <img src="https://storage.googleapis.com/rene-shop/IMG_3058.avif" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3058.avif"  alt="Thumbnail 3" />
-                        <img src="https://storage.googleapis.com/rene-shop/IMG_3055.avif" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3055.avif" alt="Thumbnail 1" />
-                        <img src="https://storage.googleapis.com/rene-shop/IMG_3059.avif" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3059.avif" alt="Thumbnail 4" />
-                        <img src="https://storage.googleapis.com/rene-shop/EE60CCAA-141C-4473-8D0A-CE688B89D24D%20(1).avif" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/EE60CCAA-141C-4473-8D0A-CE688B89D24D%20(1).avif" alt="Thumbnail 5" />
+                        <img src="https://storage.googleapis.com/rene-shop/IMG_3060.webp" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3060.avif" alt="Thumbnail 2" />
+                        <img src="https://storage.googleapis.com/rene-shop/IMG_3058.webp" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3058.avif"  alt="Thumbnail 3" />
+                        <img src="https://storage.googleapis.com/rene-shop/IMG_3055.webp" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3055.avif" alt="Thumbnail 1" />
+                        <img src="https://storage.googleapis.com/rene-shop/IMG_3059.webp" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3059.avif" alt="Thumbnail 4" />
+                        <img src="https://storage.googleapis.com/rene-shop/EE60CCAA-141C-4473-8D0A-CE688B89D24D.webp" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/EE60CCAA-141C-4473-8D0A-CE688B89D24D%20(1).avif" alt="Thumbnail 5" />
                     </div>
                 </div>
             </div>
@@ -54,9 +54,9 @@
                     {% csrf_token %}
                     <div class="quantity mt-2 d-flex align-items-center">
                         <label for="quantity" class="me-2">Quantity:</label>
-                        <button class="btn btn-secondary btn-sm" id="decrease-quantity" type="button">-</button>
+                        <button class="btn btn-dark btn-sm" id="decrease-quantity" type="button">-</button>
                         <input type="number" id="quantity" name="quantity" min="1" max="100" value="1" class="form-control mx-2" style="width: 60px;">
-                        <button class="btn btn-secondary btn-sm" id="increase-quantity" type="button">+</button>
+                        <button class="btn btn-dark btn-sm" id="increase-quantity" type="button">+</button>
                     </div>
                     <input type="hidden" name="product_id" value="{{ product.id }}">
                     <p class="product-description">{{ product.description | safe }}</p>
@@ -78,8 +78,8 @@
                     </h4>
                     {% endif %}
                     <div class="action mt-3">
-                        <button type="submit" class="add-to-cart btn btn-primary">Add to Cart</button>
-                        <a href="https://buy.stripe.com/aEUdSBeQo3NigWQbII" class="btn btn-primary">Buy now</a>
+                        <button type="submit" class="add-to-cart btn btn-dark">Add to Cart</button>
+                        <a href="https://buy.stripe.com/aEUdSBeQo3NigWQbII" class="btn btn-dark">Buy now</a>
                         <!-- <a href="#" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modelModal">3D</a> -->
                     </div>
                 </form>
