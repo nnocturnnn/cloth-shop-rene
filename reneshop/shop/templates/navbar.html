@@ -52,9 +52,13 @@
     <!-- Left side icons -->
     <div style="margin-left: 5%;" class="navbar-nav me-auto d-flex flex-row">
       <a class="nav-link mr-3 m-2 text-dark" href="#"><i class="fas fa-search fa-2x"></i></a>
-      <button id="currencyButton" style="background-color: transparent; color: black; border: none; outline: none; " class="btn btn-secondary" type="button">
-        EUR (€)
-    </button>
+      <select id="currencyDropdown" class="btn btn-secondary">
+        <option value="EUR">EUR (€)</option>
+        <option value="USD">USD ($)</option>
+        <option value="UAH">UAH (₴)</option>
+        <option value="ILS">ILS (₪)</option>
+        <!-- Add more options here for different currencies -->
+    </select>
     </div>
     
     <!-- Logo in the middle -->
@@ -90,62 +94,20 @@
     }
   });
 </script>
+
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-      // Array of available currencies
-      var currencies = [
-          { code: "EUR", symbol: "€" },
-          { code: "USD", symbol: "$" },
-          { code: "UAH", symbol: "₴" },
-          { code: "ILS", symbol: "₪" }
-      ];
-  
-      // Initialize the current currency index based on the URL
-      var currentIndex = getCurrentIndexFromURL();
-  
-      // Function to get the current index from the URL parameter
-      function getCurrentIndexFromURL() {
-          var currentCur = new URL(window.location.href).searchParams.get("cur");
-          var index = currencies.findIndex(currency => currency.code === currentCur);
-          return index >= 0 ? index : 0; // Ensure the default is 0 if not found
-      }
-  
-      // Function to change the currency and update the URL
-      function changeCurrency() {
-          // Increment the index and wrap around if necessary
-          currentIndex = (currentIndex + 1) % currencies.length;
-  
-          // Update the button text with the new currency
-          var currencyButton = document.getElementById('currencyButton');
-          if (currencyButton) {
-              currencyButton.textContent = `${currencies[currentIndex].code} (${currencies[currentIndex].symbol})`;
-          } else {
-              console.error('Currency button not found!');
-          }
-  
-          // Update the URL with the new currency and refresh the page
-          var newUrl = updateQueryStringParameter(window.location.href, 'cur', currencies[currentIndex].code);
-          window.location.href = newUrl;
-      }
-  
-      // Function to update query string parameter
-      function updateQueryStringParameter(uri, key, value) {
-          var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-          var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-          if (uri.match(re)) {
-              return uri.replace(re, '$1' + key + "=" + value + '$2');
-          } else {
-              return uri + separator + key + "=" + value;
-          }
-      }
-  
-      // Attach the event listener to the currency button
-      var currencyButton = document.getElementById('currencyButton');
-      if (currencyButton) {
-          currencyButton.addEventListener('click', changeCurrency);
-      } else {
-          console.error('Currency button not found!');
-      }
+  // Get the dropdown element
+  var currencyDropdown = document.getElementById('currencyDropdown');
+
+  // Listen for changes on the dropdown
+  currencyDropdown.addEventListener('change', function() {
+      // Get the selected currency value
+      var selectedCurrency = this.value;
+
+      // Construct the URL with the selected currency as a query parameter
+      var redirectUrl = "?cur=" + selectedCurrency;
+
+      // Redirect to the constructed URL
+      window.location.href = redirectUrl;
   });
-  </script>
-  
+</script>

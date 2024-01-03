@@ -215,3 +215,10 @@ nav {
 #mxsize {
   min-height: 60vh;
 }
+
+#currencyDropdown {
+  background-color: transparent;
+  color: black;
+  border: none;
+  outline: none;
+}
