@@ -130,12 +130,10 @@ main, footer {
 }
 
 .banner {
-  margin-top: 10%;
+  margin-top: 5%;
   /* Adjust width and height according to your design */
-  width: 100%; 
-  height: auto; /* Example height */
   display: flex;
-  justify-content: center;
+  justify-content: center !important;
   align-items: center;
   overflow: hidden; /* Hide overflowing image content */
   position: relative;

@@ -34,15 +34,15 @@
                     <!-- Large Image -->
                     
                     <div class="mb-3">
-                        <img style="border: none;" src="https://storage.googleapis.com/rene-shop/IMG_3060.webp" class="img-fluid" id="main-image" alt="Main Image" />
+                        <img style="border: none;" src="https://storage.googleapis.com/rene-shop/1.jpg" class="img-fluid" id="main-image" alt="Main Image" />
                     </div>
                     <!-- Small Thumbnails -->
                     <div class="d-flex justify-content-start thumbnail-container">
-                        <img src="https://storage.googleapis.com/rene-shop/IMG_3060.webp" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3060.webp" alt="Thumbnail 2" />
-                        <img src="https://storage.googleapis.com/rene-shop/IMG_3058.webp" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3058.webp"  alt="Thumbnail 3" />
-                        <img src="https://storage.googleapis.com/rene-shop/IMG_3055.webp" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3055.webp" alt="Thumbnail 1" />
-                        <img src="https://storage.googleapis.com/rene-shop/IMG_3059.webp" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/IMG_3059.webp" alt="Thumbnail 4" />
-                        <img src="https://storage.googleapis.com/rene-shop/EE60CCAA-141C-4473-8D0A-CE688B89D24D.webp" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/EE60CCAA-141C-4473-8D0A-CE688B89D24D.webp" alt="Thumbnail 5" />
+                        <img src="https://storage.googleapis.com/rene-shop/1.jpg" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/1.jpg" alt="Thumbnail 2" />
+                        <img src="https://storage.googleapis.com/rene-shop/2.jpg" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/2.jpg"  alt="Thumbnail 3" />
+                        <img src="https://storage.googleapis.com/rene-shop/3.jpg" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/3.jpg" alt="Thumbnail 1" />
+                        <img src="https://storage.googleapis.com/rene-shop/4.jpg" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/4.jpg" alt="Thumbnail 4" />
+                        <img src="https://storage.googleapis.com/rene-shop/5.jpg" class="img-thumbnail small-image" data-img-src="https://storage.googleapis.com/rene-shop/5.jpg" alt="Thumbnail 5" />
                     </div>
                 </div>
             </div>
@@ -80,8 +80,14 @@
                     <div class="action mt-3">
                         <button type="submit" class="add-to-cart btn btn-dark">Add to Cart</button>
                         <a href="https://buy.stripe.com/aEUdSBeQo3NigWQbII" class="btn btn-dark">Buy now</a>
+                          
                         <!-- <a href="#" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modelModal">3D</a> -->
                     </div>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="YOUR_BUTTON_ID">
+                        <input style="margin-top: 10px;" type="image" width="160px" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-large.png" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                      </form>
                 </form>
             </div>
         </div>        
