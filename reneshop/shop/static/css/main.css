@@ -198,9 +198,11 @@ nav {
 }
 
 .thumbnail-container .small-image {
+  display: inline-block; /* Replacing flex with inline-block */
   max-width: 19%;
-  flex: 0 0 24%; /* This ensures that the flex items respect the max-width */
-  margin-right: 5px; /* Optional, for some spacing between thumbnails */
+  width: 24%; /* Replacing the flex-basis */
+  margin-right: 5px; /* Spacing between thumbnails */
+  vertical-align: top; /* Aligns the images correctly */
   border: none;
 }
 
