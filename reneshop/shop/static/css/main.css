@@ -200,7 +200,7 @@ nav {
 .thumbnail-container .small-image {
   display: inline-block; /* Replacing flex with inline-block */
   max-width: 19%;
-  height: auto;
+  height: auto !important;
   width: 24%; /* Replacing the flex-basis */
   margin-right: 5px; /* Spacing between thumbnails */
   vertical-align: top; /* Aligns the images correctly */
