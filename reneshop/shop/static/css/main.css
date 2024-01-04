@@ -197,13 +197,17 @@ nav {
   background-color: #000; /* Black background for active indicator */
 }
 
+.thumbnail-container {
+  text-align: left; /* Align images to the start */
+}
+
 .thumbnail-container .small-image {
-  display: inline-block; /* Replacing flex with inline-block */
-  max-width: 19%;
-  height: auto !important;
-  width: 24%; /* Replacing the flex-basis */
-  margin-right: 5px; /* Spacing between thumbnails */
-  vertical-align: top; /* Aligns the images correctly */
+  display: inline-block;
+  max-width: 18%;
+  width: 24%;
+  height: auto; 
+  margin-right: 5px;
+  vertical-align: top;
   border: none;
 }
 
