@@ -6,7 +6,7 @@ import os
 from cloudipsp import Api, Checkout
 from decimal import Decimal
 
-api = Api(merchant_id=1539357,
+api = Api(merchant_id=os.environ.get("MERCHANT_ID"),
           secret_key=os.environ.get("FONDY_SK"))
 
 def base_view(request):
