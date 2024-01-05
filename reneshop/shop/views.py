@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product, Customer, ProductImage
 from .misc import send_telegram_message
-# import stripe
 from django.views.decorators.http import require_POST
 import os 
+from cloudipsp import Api, Checkout
+from decimal import Decimal
 
-# stripe.api_key = os.getenv("STRIPE_API")
+api = Api(merchant_id=1539357,
+          secret_key=os.environ.get("FONDY_SK"))
 
 def base_view(request):
     return render_with_categories(request, 'index.html')
@@ -63,28 +65,43 @@ def about_view(request):
 def cart_view(request):
     cart = request.session.get('cart', {})
     detailed_cart = {}
-
+    currency_code = request.GET.get('cur', 'USD').upper()
+    conversion_rates = {
+        'USD': (Decimal(1), '$'),
+        'EUR': (Decimal(0.91), '€'),
+        'ILS': (Decimal(3.69), '₪'),
+        'UAH': (Decimal(38.09), '₴'),
+    }
+    rate = conversion_rates.get(currency_code, (1, '$'))
     for product_id, item in cart.items():
         try:
             product = Product.objects.get(pk=product_id)
-            total_price = product.price * item['quantity'] 
-            
+            total_price = product.price * item['quantity']
             detailed_cart[product_id] = {
                 'product_name': product.name,
-                'price': product.price,
+                'price': product.price * rate[0],
                 'quantity': item['quantity'],
-                'total_price': total_price 
+                'total_price': total_price * rate[0]
             }
         except Product.DoesNotExist:
             print(f"Product with id {product_id} does not exist.")
 
     total_items = sum(item['quantity'] for item in detailed_cart.values())
     total_price = sum(item['total_price'] for item in detailed_cart.values())
+    checkout = Checkout(api=api)
+    data = {
+        "currency": currency_code,
+        "amount": str(int(total_price) * 100)
+    }
+    url = checkout.url(data).get('checkout_url')
+    
 
     context = {
         'cart': detailed_cart,
         'total_items': total_items,
         'total_price': total_price,
+        'currency_char': rate[1],
+        'url_pay' : url,
     }
 
     return render_with_categories(request, 'card.html', context)

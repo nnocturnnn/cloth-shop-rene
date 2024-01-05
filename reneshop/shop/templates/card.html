@@ -24,7 +24,7 @@
                     <tr>
                       <th scope="row">{{ forloop.counter }}</th>
                       <td>{{ details.product_name }}</td>
-                      <td>${{ details.price }}</td>
+                      <td>{{currency_char}}{{ details.price|floatformat:2 }}</td>
                       <form action="{% url 'update_cart' %}" method="post" class="update-cart-form">
                         {% csrf_token %}
                         <input type="hidden" name="product_id" value="{{ product_id }}">
@@ -32,7 +32,7 @@
                             <input type="number" name="new_quantity" class="form-control quantity-input" value="{{ details.quantity }}" min="1">
                         </td>
                     </form>
-                      <td>${{ details.total_price|floatformat:2 }}</td>
+                      <td>{{currency_char}}{{ details.total_price|floatformat:2 }}</td>
                       <td>
                         <form action="{% url 'remove_from_cart' product_id %}" method="post">
                           {% csrf_token %}
@@ -53,18 +53,8 @@
               <div class="card-body">
                 <h5 class="card-title">Cart Summary</h5>
                 <p>Total Items: {{ total_items }}</p>
-                <p>Total Price: ${{ total_price }}</p>
-                {% if total_items == 1 %}
-                <a href="https://buy.stripe.com/aEUdSBeQo3NigWQbII" class="btn btn-dark">Checkout</a>
-                {% elif total_items == 2 %}
-                <a href="https://buy.stripe.com/14kaGp9w4gA4fSM9AB" class="btn btn-dark">Checkout</a>
-                {% elif total_items == 3 %}
-                <a href="https://buy.stripe.com/14k6q97nW83ycGAfZ0" class="btn btn-dark">Checkout</a>
-                {% elif total_items == 4 %}
-                <a href="https://buy.stripe.com/4gw3dX23C0B66ic3cf" class="btn btn-dark">Checkout</a>
-                {% else %}
-                <a href="https://buy.stripe.com/bIY29T6jS6Zu3607sw" class="btn btn-dark">Checkout</a>
-                {% endif %}
+                <p>Total Price: {{currency_char}}{{ total_price|floatformat:2 }}</p>
+                <a href="{{ url_pay }}" class="btn btn-dark">Checkout</a>
                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                   <input type="hidden" name="cmd" value="_s-xclick">
                   <input type="hidden" name="hosted_button_id" value="YOUR_BUTTON_ID">
