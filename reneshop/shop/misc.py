@@ -2,11 +2,11 @@ import  requests
 from django.core.cache import cache
 import os
 
-TELEGRAM = "5722155491:AAGUz30lSBkO5vn0cW8K8NNk5Lm6nnbFS9E" #TODO remove 
+TELEGRAM = "5722155491:AAHjXK8-6NABjFBqmyQyIgWxrAc1FetHS6E" #TODO remove 
 
 def send_telegram_message(message_text):
     url = f'https://api.telegram.org/bot{TELEGRAM}/sendMessage'
-    params = {'chat_id': 212283073, 'text': message_text}
+    params = {'chat_id': -1002032923113, 'text': message_text}
     response = requests.post(url, data=params)
 
 
