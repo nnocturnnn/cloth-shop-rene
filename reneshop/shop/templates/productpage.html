@@ -61,33 +61,19 @@
                     <input type="hidden" name="product_id" value="{{ product.id }}">
                     <p class="product-description">{{ product.description | safe }}</p>
                     <h4 class="price">
-                        Current price:
-                        {% if currency_code == 'USD' %}
-                        <p>USD $150.00</p>
-                    {% elif currency_code == 'EUR' %}
-                        <p>EUR €140.00</p>
-                    {% elif currency_code == 'ILS' %}
-                        <p>ILS ₪540.00</p>
-                    {% elif currency_code == 'UAH' %}
-                        <p>UAH ₴5,720.00</p>
-                    {% endif %}
+                    <p>{{currency_code}} {{currency_char}} {{product.updated_price | floatformat:2}}</p>
                     </h4>
-                    {% if product.updated_price != product.price %}
-                    <h4 class="old-price">
-                        <s>Was: {{ product.price }}</s>
-                    </h4>
-                    {% endif %}
                     <div class="action mt-3">
                         <button type="submit" class="add-to-cart btn btn-dark">Add to Cart</button>
                         <a href="https://buy.stripe.com/aEUdSBeQo3NigWQbII" class="btn btn-dark">Buy now</a>
                           
                         <!-- <a href="#" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modelModal">3D</a> -->
                     </div>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                         <input type="hidden" name="cmd" value="_s-xclick">
                         <input type="hidden" name="hosted_button_id" value="YOUR_BUTTON_ID">
                         <input style="margin-top: 10px;" type="image" width="160px" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-large.png" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                      </form>
+                      </form> -->
                 </form>
             </div>
         </div>        

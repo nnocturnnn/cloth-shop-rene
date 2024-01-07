@@ -3,11 +3,11 @@ from .models import Category, Product, Customer, ProductImage
 from .misc import send_telegram_message
 from django.views.decorators.http import require_POST
 import os 
-from cloudipsp import Api, Checkout
+import stripe
+from django.conf import settings
 from decimal import Decimal
 
-api = Api(merchant_id=os.environ.get("MERCHANT_ID"),
-          secret_key=os.environ.get("FONDY_SK"))
+stripe.api_key = os.getenv('STRIPE_API')
 
 def base_view(request):
     return render_with_categories(request, 'index.html')
@@ -44,7 +44,7 @@ def render_with_categories(request, template_name, context={}):
 
         return render(request, 'success.html', {'success_message': success_message})  # Replace 'success.html' with your success template
     context.update({'categories': categories})
-    context.update({'currency_code': request.GET.get('cur', 'EUR')})
+    context.update({'currency_code': request.GET.get('cur', 'USD')})
     context.update({'lencart': len(request.session.get('cart', {}))})
 
     return render(request, template_name, context)
@@ -81,27 +81,51 @@ def cart_view(request):
                 'product_name': product.name,
                 'price': product.price * rate[0],
                 'quantity': item['quantity'],
-                'total_price': total_price * rate[0]
+                'total_price': total_price * rate[0],
+                'description' : product.description,
             }
         except Product.DoesNotExist:
             print(f"Product with id {product_id} does not exist.")
 
     total_items = sum(item['quantity'] for item in detailed_cart.values())
     total_price = sum(item['total_price'] for item in detailed_cart.values())
-    checkout = Checkout(api=api)
-    data = {
-        "currency": currency_code,
-        "amount": str(int(total_price) * 100)
-    }
-    url = checkout.url(data).get('checkout_url')
-    
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[
+                {
+                    'price_data': {
+                        'currency': currency_code.lower(),
+                        'unit_amount': int(total_price) * 100,
+                        'product_data': {
+                            'name': detailed_cart['1']['product_name'],
+                            'description' : detailed_cart['1']['description'].replace("<br>","\n"),
+                            'images' : ['https://storage.googleapis.com/rene-shop/1.jpg'],
+                        },
+                    },
+                    'quantity': 1,
+                },
+            ],
+            shipping_address_collection={
+                'allowed_countries': getattr(settings, 'ALL_COUNTRY_CODES', ''),
+            },
+            mode='payment',
+            success_url=request.build_absolute_uri('/success/'),  # Adjust with your success route
+            cancel_url=request.build_absolute_uri('/card'),  # Adjust with your cancel route
+        )
+
+        payment_url = checkout_session.url
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        payment_url = None
 
     context = {
         'cart': detailed_cart,
         'total_items': total_items,
         'total_price': total_price,
         'currency_char': rate[1],
-        'url_pay' : url,
+        'url_pay' : payment_url,
     }
 
     return render_with_categories(request, 'card.html', context)
@@ -110,6 +134,8 @@ def checkout_view(request):
     return render_with_categories(request, 'checkout.html')
 
 def success(request):
+    request.session['cart'] = {}
+    request.session.modified = True
     return render_with_categories(request, 'success.html')
 
 def test_view(request):
@@ -136,9 +162,18 @@ def collections_by_category_view(request, category):
 
 
 def product_detail(request, product_id):
+    currency_code = request.GET.get('cur', 'USD').upper()
     product = get_object_or_404(Product, pk=product_id)
+    conversion_rates = {
+        'USD': (Decimal(1), '$'),
+        'EUR': (Decimal(0.91), '€'),
+        'ILS': (Decimal(3.69), '₪'),
+        'UAH': (Decimal(38.09), '₴'),
+    }
+    rate = conversion_rates.get(currency_code, (1, '$'))
+    product.updated_price *= rate[0] 
     images = ProductImage.objects.filter(product=product)
-    context = {'product': product, 'images': images}
+    context = {'product': product, 'images': images, 'currency_char': rate[1]}
     return render_with_categories(request, 'productpage.html', context)
 
 @require_POST
