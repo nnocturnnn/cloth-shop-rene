@@ -9,6 +9,25 @@ from decimal import Decimal
 
 stripe.api_key = os.getenv('STRIPE_API')
 
+shipping_rate = stripe.ShippingRate.create(
+    display_name='Standard shipping',
+    type='fixed_amount',
+    fixed_amount={
+        'amount': 1000,  # This is in the smallest currency unit, e.g., cents for USD
+        'currency': 'usd',
+    },
+    delivery_estimate={
+        'minimum': {
+            'unit': 'business_day',
+            'value': 5,
+        },
+        'maximum': {
+            'unit': 'business_day',
+            'value': 15,
+        },
+    }
+)
+
 def base_view(request):
     return render_with_categories(request, 'index.html')
 
@@ -109,6 +128,11 @@ def cart_view(request):
             shipping_address_collection={
                 'allowed_countries': getattr(settings, 'ALL_COUNTRY_CODES', ''),
             },
+            shipping_options=[
+                {
+                    'shipping_rate': shipping_rate.id,
+                },
+            ],
             mode='payment',
             success_url=request.build_absolute_uri('/success/'),  # Adjust with your success route
             cancel_url=request.build_absolute_uri('/card'),  # Adjust with your cancel route
@@ -134,8 +158,19 @@ def checkout_view(request):
     return render_with_categories(request, 'checkout.html')
 
 def success(request):
+    cart = request.session.get('cart', {})
+    for product_id, item in cart.items():
+        try:
+            product = Product.objects.get(pk=product_id)
+            product.quantity -= item['quantity']
+            product.save()
+        except:
+            print(f"Product with id {product_id} does not exist.")
+    
     request.session['cart'] = {}
     request.session.modified = True
+    send_telegram_message("New Order is placed")
+
     return render_with_categories(request, 'success.html')
 
 def test_view(request):
